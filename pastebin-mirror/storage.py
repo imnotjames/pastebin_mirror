@@ -1,4 +1,7 @@
 import sqlite3
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class SQLite3Storage:
@@ -6,6 +9,8 @@ class SQLite3Storage:
         self.connection = sqlite3.connect(location)
 
     def initialize_tables(self):
+        logger.info('creating table `paste` if it doesn\'t exist')
+
         self.connection.execute(
             '''
             CREATE TABLE IF NOT EXISTS paste (
@@ -19,6 +24,8 @@ class SQLite3Storage:
             );
             '''
         )
+
+        logger.info('creating table `paste_content` if it doesn\'t exist')
 
         self.connection.execute(
             '''
@@ -57,6 +64,8 @@ class SQLite3Storage:
             )
         )
 
+        logger.debug('persisted paste reference for paste `%s`', key)
+
         self.connection.commit()
 
     def save_paste_content(self, key, content):
@@ -72,3 +81,5 @@ class SQLite3Storage:
                 content,
             )
         )
+
+        logger.debug('persisted paste content for paste `%s`', key)

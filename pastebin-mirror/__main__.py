@@ -3,6 +3,9 @@ from storage import SQLite3Storage
 import time
 import sys
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def usage():
@@ -17,7 +20,7 @@ if __name__ == '__main__':
     pastebin_sqlite_database = sys.argv[1]
 
     if os.path.isdir(pastebin_sqlite_database):
-        usage()
+        logger.error('sqlite database must be a file')
         sys.exit(1)
 
     scraper = PastebinComScraper()
@@ -31,6 +34,8 @@ if __name__ == '__main__':
         for paste in recent_pastes:
             key = paste['key']
 
+            logger.info('Found paste %(key)s created %(created)s', extra={'paste': key, 'created': paste['date']})
+
             storage.save_paste_reference(
                 key,
                 paste['size'],
@@ -42,7 +47,7 @@ if __name__ == '__main__':
             )
 
             if not storage.has_paste_content(key):
-                print("Fetching paste content for %s" % key)
+                logger.info('Fetching paste content for %(key)s', extra={'paste': key})
 
                 storage.save_paste_content(key, scraper.get_paste_content(key))
 
