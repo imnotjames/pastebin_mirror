@@ -1,5 +1,5 @@
-from scraper import PastebinComScraper
-from storage import SQLite3Storage
+from pastebin_mirror.scraper import PastebinComScraper
+from pastebin_mirror.storage import SQLite3Storage
 import time
 import sys
 import os
@@ -43,7 +43,9 @@ if __name__ == '__main__':
     if '-v' in arguments:
         logging.basicConfig(level=logging.INFO)
 
-    if len(arguments) < 2:
+        arguments.remove('-v')
+
+    if len(arguments) < 1:
         print("[-v] [sqlite-file]")
         sys.exit(1)
 
