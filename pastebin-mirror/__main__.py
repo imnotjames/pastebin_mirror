@@ -21,7 +21,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     scraper = PastebinComScraper()
-    storage = SQLite3Storage()
+    storage = SQLite3Storage(pastebin_sqlite_database)
 
     storage.initialize_tables()
 
