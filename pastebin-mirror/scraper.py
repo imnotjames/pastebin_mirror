@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+from json import JSONDecodeError
 import requests
 
 
@@ -28,7 +28,15 @@ class PastebinComScraper:
         if paste.text == self.__ERROR_TEXT__:
             return None
 
-        return paste.json()[0]
+        try:
+            paste_json = paste.json()
+        except JSONDecodeError:
+            return None
+
+        if len(paste_json) == 0:
+            return None
+
+        return paste_json[0]
 
     def get_recent_pastes(self, limit=250):
         paste_list = requests.get(self.__LIST_URL__, params={'limit': min(250, limit)})
@@ -36,4 +44,7 @@ class PastebinComScraper:
         if not paste_list.ok:
             return []
 
-        return paste_list.json()
+        try:
+            return paste_list.json()
+        except JSONDecodeError:
+            return []
