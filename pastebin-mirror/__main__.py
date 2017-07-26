@@ -8,26 +8,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def usage():
-    print("pastebin-mirror [sqlite-file]")
-
-
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        usage()
-        sys.exit(1)
-
-    pastebin_sqlite_database = sys.argv[1]
-
-    if os.path.isdir(pastebin_sqlite_database):
-        logger.error('sqlite database must be a file')
-        sys.exit(1)
-
-    scraper = PastebinComScraper()
-    storage = SQLite3Storage(pastebin_sqlite_database)
-
-    storage.initialize_tables()
-
+def scrape_recent_pastes(scraper, storage):
     while True:
         recent_pastes = scraper.get_recent_pastes()
 
@@ -52,3 +33,29 @@ if __name__ == '__main__':
                 storage.save_paste_content(key, scraper.get_paste_content(key))
 
         time.sleep(1)
+
+
+if __name__ == '__main__':
+    arguments = sys.argv
+
+    arguments.pop(0)
+
+    if '-v' in arguments:
+        logging.basicConfig(level=logging.INFO)
+
+    if len(arguments) < 2:
+        print("pastebin-mirror [-v] [sqlite-file]")
+        sys.exit(1)
+
+    pastebin_sqlite_database = arguments[0]
+
+    if os.path.isdir(pastebin_sqlite_database):
+        logger.error('sqlite database must be a file')
+        sys.exit(1)
+
+    scraper = PastebinComScraper()
+    storage = SQLite3Storage(pastebin_sqlite_database)
+
+    storage.initialize_tables()
+
+    scrape_recent_pastes(scraper, storage)
