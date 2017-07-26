@@ -31,7 +31,7 @@ class PastebinComScraper:
         return paste.json()[0]
 
     def get_recent_pastes(self, limit=250):
-        paste_list = requests.get(self.__LIST_URL__, {limit: min(250, limit)})
+        paste_list = requests.get(self.__LIST_URL__, params={'limit': min(250, limit)})
 
         if not paste_list.ok:
             return []

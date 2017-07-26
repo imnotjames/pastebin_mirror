@@ -33,8 +33,8 @@ if __name__ == '__main__':
 
             storage.save_paste_reference(
                 key,
-                paste['date'],
                 paste['size'],
+                paste['date'],
                 paste['expire'],
                 paste['title'],
                 paste['syntax'],
