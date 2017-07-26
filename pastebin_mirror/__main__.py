@@ -1,9 +1,9 @@
 from pastebin_mirror.scraper import PastebinComScraper
 from pastebin_mirror.storage import SQLite3Storage
 import time
-import sys
-import os
 import logging
+
+__version__='0.0.1'
 
 logger = logging.getLogger(__name__)
 
@@ -36,20 +36,30 @@ def scrape_recent_pastes(scraper, storage):
 
 
 if __name__ == '__main__':
-    arguments = sys.argv
+    from argparse import ArgumentParser
+    import sys
+    import os
 
-    arguments.pop(0)
+    parser = ArgumentParser(description='Mirror publicly uploaded pastes from Pastebin.com')
 
-    if '-v' in arguments:
+    parser.add_argument('file', metavar='file', nargs=1, help='sqlite file to save to')
+
+    parser.add_argument('--version', action='version', version=__version__)
+
+    parser.add_argument('--verbose', '-v', action='count', dest='verbose', help='increase verbosity, multiple times to increase it more')
+
+    arguments = parser.parse_args()
+
+    logging.basicConfig(level=logging.ERROR)
+
+    if arguments.verbose == 1:
+        logging.basicConfig(level=logging.WARNING)
+    elif arguments.verbose == 2:
         logging.basicConfig(level=logging.INFO)
+    elif arguments.verbose >= 3:
+        logging.basicConfig(level=logging.DEBUG)
 
-        arguments.remove('-v')
-
-    if len(arguments) < 1:
-        print("[-v] [sqlite-file]")
-        sys.exit(1)
-
-    pastebin_sqlite_database = arguments[0]
+    pastebin_sqlite_database = arguments.file[0]
 
     if os.path.isdir(pastebin_sqlite_database):
         logger.error('sqlite database must be a file')
