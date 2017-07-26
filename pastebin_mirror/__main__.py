@@ -44,7 +44,7 @@ if __name__ == '__main__':
         logging.basicConfig(level=logging.INFO)
 
     if len(arguments) < 2:
-        print("pastebin-mirror [-v] [sqlite-file]")
+        print("[-v] [sqlite-file]")
         sys.exit(1)
 
     pastebin_sqlite_database = arguments[0]
