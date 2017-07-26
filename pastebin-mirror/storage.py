@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class SQLite3Storage:
     def __init__(self, location='pastebin.db'):
         self.connection = sqlite3.connect(location)

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from json import JSONDecodeError
 import requests
 
