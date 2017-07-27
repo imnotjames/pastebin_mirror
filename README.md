@@ -1,2 +1,2 @@
 # pastebin_mirror
-Mirror Pastebin.com to a local SQLite
+Scrape and mirror [Pastebin.com](https://pastebin.com) to a local database.
