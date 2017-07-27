@@ -8,7 +8,7 @@ __version__='0.0.1'
 logger = logging.getLogger(__name__)
 
 
-def scrape_recent_pastes(scraper, storage):
+def scrape_recent_pastes(scraper, storage, time_between_scrapes = 10):
     while True:
         recent_pastes = scraper.get_recent_pastes()
 
@@ -32,7 +32,7 @@ def scrape_recent_pastes(scraper, storage):
 
                 storage.save_paste_content(key, scraper.get_paste_content(key))
 
-        time.sleep(1)
+        time.sleep(time_between_scrapes)
 
 
 if __name__ == '__main__':
