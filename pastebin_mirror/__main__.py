@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--version', action='version', version=__version__)
 
-    parser.add_argument('--verbose', '-v', action='count', dest='verbose', help='increase verbosity, multiple times to increase it more')
+    parser.add_argument('--verbose', '-v', default=0, action='count', dest='verbose', help='increase verbosity, multiple times to increase it more')
 
     arguments = parser.parse_args()
 
