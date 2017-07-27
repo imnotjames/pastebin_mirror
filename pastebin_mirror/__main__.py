@@ -15,7 +15,7 @@ def scrape_recent_pastes(scraper, storage):
         for paste in recent_pastes:
             key = paste['key']
 
-            logger.info('Found paste %(key)s created %(created)s', extra={'paste': key, 'created': paste['date']})
+            logger.info('Found paste %s created on %s', key, paste['date'])
 
             storage.save_paste_reference(
                 key,
@@ -28,7 +28,7 @@ def scrape_recent_pastes(scraper, storage):
             )
 
             if not storage.has_paste_content(key):
-                logger.info('Fetching paste content for %(key)s', extra={'paste': key})
+                logger.info('Fetching paste content for %s', key)
 
                 storage.save_paste_content(key, scraper.get_paste_content(key))
 
@@ -50,14 +50,14 @@ if __name__ == '__main__':
 
     arguments = parser.parse_args()
 
-    logging.basicConfig(level=logging.ERROR)
-
     if arguments.verbose == 1:
         logging.basicConfig(level=logging.WARNING)
     elif arguments.verbose == 2:
         logging.basicConfig(level=logging.INFO)
     elif arguments.verbose >= 3:
         logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.ERROR)
 
     pastebin_sqlite_database = arguments.file[0]
 

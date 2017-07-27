@@ -19,7 +19,7 @@ class PastebinComScraper:
         result = requests.get(self.__RAW_URL__ + key)
 
         if not result.ok:
-            logger.error('http status not OK: code %d', extras={'code': result.status_code})
+            logger.error('http status not OK: code %d', result.status_code)
             return None
 
         return result.content
@@ -27,10 +27,10 @@ class PastebinComScraper:
     def get_paste_metadata(self, key):
         paste = requests.get(self.__METADATA_URL__, params={'i': key})
 
-        logger.debug('made request to %s for paste %s', (self.__METADATA_URL__, key))
+        logger.debug('made request to %s for paste %s', self.__METADATA_URL__, key)
 
         if not paste.ok:
-            logger.error('http status not OK: code %d', extras={'code': paste.status_code})
+            logger.error('http status not OK: code %d', paste.status_code)
             return None
 
         if paste.text == self.__ERROR_TEXT__ :
@@ -57,7 +57,7 @@ class PastebinComScraper:
         paste_list = requests.get(self.__LIST_URL__, params={'limit': limit})
 
         if not paste_list.ok:
-            logger.error('http status not OK: code %d', extras={'code': paste_list.status_code})
+            logger.error('http status not OK: code %d', paste_list.status_code)
             return []
 
         try:
