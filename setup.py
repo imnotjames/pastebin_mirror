@@ -12,6 +12,7 @@ setup(
         'pastebin_mirror'
     ],
     install_requires=[
+      'lxml',
       'requests',
     ],
     zip_safe=False
