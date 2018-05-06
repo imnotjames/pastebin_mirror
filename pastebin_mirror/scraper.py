@@ -10,9 +10,9 @@ logger = logging.getLogger(__name__)
 class PastebinComScraper:
     def __init__(self):
         self.__RAW_URL__ = 'https://pastebin.com/raw/'
-        self.__ITEM_URL__ = 'https://pastebin.com/api_scrape_item.php'
-        self.__METADATA_URL__ = 'https://pastebin.com/api_scrape_item_meta.php'
-        self.__LIST_URL__ = 'https://pastebin.com/api_scraping.php'
+        self.__ITEM_URL__ = 'https://scrape.pastebin.com/api_scrape_item.php'
+        self.__METADATA_URL__ = 'https://scrape.pastebin.com/api_scrape_item_meta.php'
+        self.__LIST_URL__ = 'https://scrape.pastebin.com/api_scraping.php'
         self.__ARCHIVE_URL__ = 'https://pastebin.com/archive'
         self.__ERROR_TEXT__ = 'Error, we cannot find this paste.'
         self.__NOT_WHITELISTED_MATCHER__ = re.compile('^THIS IP: [^ ]+ DOES NOT HAVE ACCESS. VISIT: https://pastebin.com/scraping TO GET ACCESS!$')
